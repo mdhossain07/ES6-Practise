@@ -1,4 +1,5 @@
 class studentProfile{
+    
     constructor(sId, sName){
         this.id = sId;
         this.name = sName

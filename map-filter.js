@@ -1,13 +1,5 @@
 const numbers = [1, 2, 3, 4, 5];
 
-function output(elements){
-    console.log (elements);
-}
-
-output(numbers);
-
-
-
 // const output = [];
 
 // for (let i = 0; i <numbers.length; i++){
