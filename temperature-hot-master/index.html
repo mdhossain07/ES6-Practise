@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Temperature Hot</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url(images/bg-image.jpg) no-repeat;
+            background-size: cover;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form class="col-md-6 m-auto py-5">
+            <div class="input-group mb-3">
+                <input id= "inputValue" type="text" class="form-control" placeholder="Enter a location for Weather ...">
+                <div class="input-group-append">
+                    <button id="search" type="button" class="btn btn-danger">Search</button>
+                </div>
+            </div>
+        </form>
+        <div class="weather-status text-white text-center">
+            <img id ="icons" src="https://openweathermap.org/img/wn/02d@2x.png" alt="">
+            <h1 id ="cityName">Dhaka</h1>
+            <h3 id ="tempValue"><span>38.06</span>&deg;C</h3>
+            <h1 id ="condition" class="lead">Clouds</h1>
+        </div>
+    </div>
+
+
+    
+    <script>
+
+        const searchButton = document.getElementById('search');
+        searchButton.addEventListener('click', function(){
+            fetch('https://api.openweathermap.org/data/2.5/weather?q='+inputValue.value+'&appid=3f1908050656d62d954fd06be11ad5ce')
+            .then((res)=> res.json())
+            .then(data =>{
+
+                const kelvin = data.main.temp;
+                const cityName = data.name;
+                const condition = data.weather[0].description;
+
+                function temp(kelvin){   
+                let celcius = kelvin - 273.15;
+                //console.log(celcius);
+                return celcius;
+
+            }
+
+            const temparature = temp(kelvin);
+            const accuTemp = temparature.toFixed(2);
+
+            const city = document.getElementById('cityName');
+            city.innerText = cityName;
+
+            const tempValue = document.getElementById('tempValue');
+            tempValue.innerText = `${accuTemp}C`;
+
+            const weatherCondition = document.getElementById('condition');
+            weatherCondition.innerText = condition;
+
+            if (condition == 'Haze'){
+                document.getElementById("icons").src = "https://w7.pngwing.com/pngs/910/31/png-transparent-weather-forecasting-computer-icons-bermuda-weather-service-weather-map-foggy-text-rectangle-logo-thumbnail.png";
+    
+            }
+           
+            })  
+
+            
+            .catch(err => {
+                alert("Wrong City Name");  
+            })
+
+        })
+
+
+
+        
+
+    </script>
+
+</body>
+
+</html>
